@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 23:08:24 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/03 13:51:42 by bruno            ###   ########.fr       */
+/*   Updated: 2022/12/03 20:29:02 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	main(int argc, char **argv)
 	}
 	printf("---------------------\n");
 	printf("-------start---------\n");
-	printf("NUMBER: |%ld|\n", table.n_phi);
 	if (philo_start(&table))
 	{
 		clean_philo(&table);

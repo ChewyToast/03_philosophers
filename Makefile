@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bruno <bruno@student.42.fr>                +#+  +:+       +#+         #
+#    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/03 11:48:41 by bruno             #+#    #+#              #
-#    Updated: 2022/12/03 12:31:54 by bruno            ###   ########.fr        #
+#    Updated: 2022/12/03 21:00:03 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	philo
 
 FILES	=	philo.c\
+			utils.c\
 			libft.c\
 			parsing.c\
 			simulation.c

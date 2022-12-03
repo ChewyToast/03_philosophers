@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 08:52:54 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/03 12:40:53 by bruno            ###   ########.fr       */
+/*   Updated: 2022/12/03 19:33:25 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,4 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	while (size--)
 		mall[size] = 0;
 	return (mall);
-}
-
-int	ft_atoi(const char *nptr)
-{
-	int	num;
-	int	symb;
-
-	num = 0;
-	symb = 1;
-	while (*nptr == 32 || (*nptr >= 9 && *nptr <= 13))
-		nptr++;
-	if (*nptr == '-')
-	{
-		symb = -1;
-		nptr++;
-	}
-	else if (*nptr == '+')
-		nptr++;
-	while (*nptr >= 48 && *nptr <= 57)
-	{
-		num *= 10;
-		num = num + (*nptr - 48);
-		nptr++;
-	}
-	return (num * symb);
 }
