@@ -17,12 +17,10 @@
 
 void	printer(char *to_print, t_table *table, t_philo *phi, long long time)
 {
+	pthread_mutex_lock(&table->print);
 	if (!table->dead)
-	{
-		pthread_mutex_lock(&table->print);
 		printf("%lld %zu %s\n", time, phi->num, to_print);
-		pthread_mutex_unlock(&table->print);
-	}
+	pthread_mutex_unlock(&table->print);
 }
 
 long long	get_time(void)
@@ -38,4 +36,12 @@ void	my_sleep(long long sleep_time)
 	sleep_time += get_time();
 	while (get_time() < sleep_time)
 		usleep(64);
+}
+
+void	set_dead(t_table *table, ssize_t count)
+{
+	pthread_mutex_lock(&table->print);
+	printf("%lld %zu %s\n", get_time() - table->time->tstart, count + 1, "died");
+	table->dead = 1;
+	pthread_mutex_unlock(&table->print);
 }

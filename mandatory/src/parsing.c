@@ -41,11 +41,8 @@ static _Bool	time_startup(t_table *table, char **argv, int argc)
 	table->phi_counter = 0;
 	table->time->tstart = 0;
 	table->time->tdie = atoi(argv[2]);
-	printf("Time to die: |%lld|\n", table->time->tdie);
 	table->time->teat = atoi(argv[3]);
-	printf("Time to eat: |%lld|\n", table->time->teat);
 	table->time->tsleep = atoi(argv[4]);
-	printf("Time to sleep: |%lld|\n", table->time->tsleep);
 	if (argc == 6)
 		table->time->eat_times = atoi(argv[5]);
 	else
@@ -82,7 +79,7 @@ static _Bool	parse_init(char **argv)
 	{
 		tmp = 0;
 		while (argv[count][tmp] && (argv[count][tmp] >= '0'
-			|| argv[count][tmp] <= '9'))
+			&& argv[count][tmp] <= '9'))
 			tmp++;
 		if (argv[count][tmp] || tmp > 5)
 			return (1);

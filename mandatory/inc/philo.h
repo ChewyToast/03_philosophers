@@ -29,12 +29,14 @@
 int			philo_init(int argc, char **argv, t_table *table);
 
 //	----- simulation.c
-_Bool		philo_start(t_table *table);
+int			philo_start(t_table *table);
 
 //	----- utils.c
 long long	get_time(void);
+void		set_dead(t_table *table, ssize_t count);
 void		my_sleep(int32_t sleep_time);
-void		printer(char *to_print, t_table *table, t_philo *phi, long long time);
+void		printer(char *to_print, t_table *table, t_philo *phi,
+				long long time);
 
 //	----- libft.c
 int			ft_strlen(const char *s);

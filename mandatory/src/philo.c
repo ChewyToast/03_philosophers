@@ -12,41 +12,26 @@
 
 #include "../inc/philo.h"
 
-void	clean_philo(t_table *table);
-_Bool	destroy_mutex(t_table *table);
+static int		clean_philo(t_table *table);
+static _Bool	destroy_mutex(t_table *table);
 
 int	main(int argc, char **argv)
 {
 	t_table	table;
 	int		tmp;
 
-	printf("-------INIT---------\n");
 	tmp = philo_init(argc, argv, &table);
 	if (tmp == 18)
-	{
-		printf("parse error\n");
 		return (1);
-	}
 	else if (tmp)
-	{
-		printf("Parse error\n");
-		clean_philo(&table);
-		return (1);
-	}
-	printf("---------------------\n");
-	printf("-------start---------\n");
+		return (clean_philo(&table));
 	if (philo_start(&table))
-	{
-		clean_philo(&table);
-		return (1);
-	}
-	printf("---------------------\n");
-	printf("-------clean---------\n");
+		return (clean_philo(&table));
 	clean_philo(&table);
 	return (0);
 }
 
-void	clean_philo(t_table *table)
+static int	clean_philo(t_table *table)
 {
 	if (destroy_mutex(table))
 		printf("Error destroying mutex recurse\n");
@@ -56,21 +41,17 @@ void	clean_philo(t_table *table)
 		free(table->time);
 	if (table->philo)
 		free(table->philo);
+	return (1);
 }
 
-_Bool	destroy_mutex(t_table *table)
+static _Bool	destroy_mutex(t_table *table)
 {
 	size_t	count;
 
 	count = 0;
 	while (count < table->n_phi)
-	{
-		pthread_mutex_destroy(&table->forks[count]);
-		printf("destroying mutex: |%ld| n_phi: |%ld|\n", count, table->n_phi);
-		count++;
-	}
+		pthread_mutex_destroy(&table->forks[count++]);
 	pthread_mutex_destroy(&table->util);
 	pthread_mutex_destroy(&table->print);
-	(void)table;
 	return (0);
 }
