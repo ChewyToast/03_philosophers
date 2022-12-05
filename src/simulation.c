@@ -28,7 +28,7 @@ int	philo_start(t_table *table)
 	while (count < table->n_phi)
 	{
 		if (pthread_create(&tmp, NULL, (void *)&philo_routine, (void *)table))
-			return (printf("create error\n"));
+			return (write(2, "philo: Error creating thread\n", 29));
 		count++;
 	}
 	pthread_mutex_unlock(&table->util);
@@ -47,9 +47,7 @@ static void	philo_start_iter(t_table *table)
 	{
 		if (count == table->n_phi)
 			count = 0;
-		if (eat_enough(table->philo[count].eat_count, table->time->eat_times))
-			table->dead = 1;
-		else if (table->philo[count].eat_count == 0)
+		if (table->philo[count].eat_count == 0)
 		{
 			if (table->time->tdie <= get_time() - table->time->tstart)
 				set_dead(table, count);
@@ -83,6 +81,8 @@ static void	philo_routine(t_table *table)
 		my_sleep(table->time->teat);
 		pthread_mutex_unlock(this_philo->left);
 		pthread_mutex_unlock(this_philo->right);
+		if (eat_enough(this_philo->eat_count, table->time->eat_times))
+			break ;
 		printer(ISS, table, this_philo, get_time() - table->time->tstart);
 		my_sleep(table->time->tsleep);
 		printer(IST, table, this_philo, get_time() - table->time->tstart);

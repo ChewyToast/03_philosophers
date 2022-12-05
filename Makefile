@@ -6,7 +6,7 @@
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/03 11:48:41 by bruno             #+#    #+#              #
-#    Updated: 2022/12/03 21:00:03 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/12/05 21:59:43 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ DEPS	=	$(addprefix $(DEPS_DIR)/, $(FILES:.c=.d))
 
 MKF		=	Makefile
 
-SRC_DIR	=	mandatory/src
+SRC_DIR	=	src
 
 OBJ_DIR		=	.obj
 
@@ -37,6 +37,8 @@ UNAME		=	$(shell uname)
 FLAGS		=	-Wall -Werror -Wextra
 
 FLAGS_MMD	=	-Wall -Werror -Wextra -MMD -MP
+
+INCLUDE		=	-I inc
 
 GCC			:= gcc
 ifeq ($(UNAME), Linux)
@@ -62,11 +64,11 @@ re:
 
 
 $(NAME):	$(OBJ_DIR) $(DEPS_DIR) $(OBJS)
-			@$(GCC) $(FLAGS) $(OBJS) -o $(NAME)
+			@$(GCC) $(FLAGS) $(INCLUDE) $(OBJS) -o $(NAME)
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c $(MKF)
 			@echo "compiling: ->{$(notdir $<)}<-"
-			$(GCC) $(FLAGS_MMD) -c $< -o $@
+			$(GCC) $(FLAGS_MMD) $(INCLUDE) -c $< -o $@
 			@mv $(patsubst %.o, %.d, $@) $(DEPS_DIR)/
 
 $(OBJ_DIR):

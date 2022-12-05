@@ -34,7 +34,7 @@ int	main(int argc, char **argv)
 static int	clean_philo(t_table *table)
 {
 	if (destroy_mutex(table))
-		printf("Error destroying mutex recurse\n");
+		write(2, "Error destroying mutex recurse\n", 31);
 	if (table->forks)
 		free(table->forks);
 	if (table->time)

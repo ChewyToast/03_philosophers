@@ -19,7 +19,13 @@ void	printer(char *to_print, t_table *table, t_philo *phi, long long time)
 {
 	pthread_mutex_lock(&table->print);
 	if (!table->dead)
-		printf("%lld %zu %s\n", time, phi->num, to_print);
+	{
+		if (printf("%lld %zu %s\n", time, phi->num, to_print) < 0)
+		{
+			write(2, "printf: Bad file descriptor\n", 28);
+			table->dead = 1;
+		}
+	}
 	pthread_mutex_unlock(&table->print);
 }
 
@@ -41,7 +47,8 @@ void	my_sleep(long long sleep_time)
 void	set_dead(t_table *table, ssize_t count)
 {
 	pthread_mutex_lock(&table->print);
-	printf("%lld %zu %s\n", get_time() - table->time->tstart, count + 1, "died");
+	if (printf("%lld %zu %s\n", get_time() - table->time->tstart, count + 1, "died") < 0)
+		write(2, "printf: Bad file descriptor\n", 28);
 	table->dead = 1;
 	pthread_mutex_unlock(&table->print);
 }

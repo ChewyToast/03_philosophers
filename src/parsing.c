@@ -30,7 +30,7 @@ int	philo_init(int argc, char **argv, t_table *table)
 		return (write(2, "Memory alloc error\n", 19));
 	time_startup(table, argv, argc);
 	if (mutex_init(table))
-		return (printf("mutex init error\n"));
+		return (write(2, "mutex init error\n", 17));
 	return (0);
 }
 
