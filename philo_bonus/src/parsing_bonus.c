@@ -13,7 +13,7 @@
 #include "../inc/philo.h"
 
 static _Bool	parse_init(char **argv);
-static _Bool	mutex_init(t_table *table);
+static _Bool	sem_init(t_table *table, char *name);
 static _Bool	time_startup(t_table *table, char **argv, int argc);
 
 int	philo_init(int argc, char **argv, t_table *table)
@@ -23,12 +23,13 @@ int	philo_init(int argc, char **argv, t_table *table)
 	if (parse_init(argv))
 		return (write(2, "Invalid Arguments\n", 18));
 	table->n_phi = atoi(argv[1]);
-	table->forks = ft_calloc(sizeof(pthread_mutex_t), table->n_phi);
-	if (!(table->philo) || !(table->time) || !(table->forks))
-		return (write(2, "Memory alloc error\n", 19));
+	table->time = ft_calloc(sizeof(t_time), 1);
+	table->forks = ft_calloc(sizeof(sem_t *), table->n_phi);
+	if (!(table->time) || !(table->forks))
+		return (write(2, "philo: Memory alloc error\n", 26));
 	time_startup(table, argv, argc);
-	if (mutex_init(table))
-		return (write(2, "mutex init error\n", 17));
+	if (sem_init(table, "sem1"))
+		return (write(2, "philo: sem_open error\n", 22));
 	return (0);
 }
 
@@ -48,20 +49,22 @@ static _Bool	time_startup(t_table *table, char **argv, int argc)
 	return (0);
 }
 
-static _Bool	mutex_init(t_table *table)
+static _Bool	sem_init(t_table *table, char *name)
 {
 	size_t	count;
 
 	count = 0;
 	while (count < table->n_phi)
 	{
-		if (pthread_mutex_init(&table->forks[count], NULL))
+		table->forks[count] = sem_open(name, O_CREAT);
+		if (!table->forks[count])
 			return (1);
+		name[3] += 1;
 		count++;
 	}
-	if (pthread_mutex_init(&table->util, NULL))
-		return (1);
-	if (pthread_mutex_init(&table->print, NULL))
+	table->util = sem_open("sem_util", O_CREAT);
+	table->print = sem_open("sem_print", O_CREAT);
+	if (!table->util || !table->print)
 		return (1);
 	return (0);
 }

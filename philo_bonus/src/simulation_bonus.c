@@ -19,6 +19,15 @@ static void		philo_start_iter(t_table *table);
 
 int	philo_start(t_table *table)
 {
+	pid_t	pid;
+	size_t	count;
+
+	count = 0;
+	sem_wait(table->util);
+	while (count < table->n_phi)
+	{
+		s
+	}
 }
 
 static void	philo_start_iter(t_table *table)

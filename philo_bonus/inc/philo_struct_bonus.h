@@ -24,25 +24,16 @@ typedef struct s_time
 	ssize_t		eat_times;
 }	t_time;
 
-typedef struct s_philo
-{
-	size_t			num;
-	size_t			eat_count;
-	long long		last_eat;
-	pthread_mutex_t	*right;
-	pthread_mutex_t	*left;
-}	t_philo;
-
 typedef struct s_table
 {
-	size_t			n_phi;
-	size_t			phi_counter;
-	char			**argv;
-	_Bool			dead;
-	t_time			*time;
-	pthread_mutex_t	util;
-	pthread_mutex_t	print;
-	pthread_mutex_t	*forks;
+	size_t	n_phi;
+	size_t	phi_counter;
+	char	**argv;
+	_Bool	dead;
+	t_time	*time;
+	sem_t	*util;
+	sem_t	*print;
+	sem_t	**forks;
 }	t_table;
 
 # define TAF "has taken a fork"

@@ -13,7 +13,7 @@
 #include "../inc/philo.h"
 
 static int		clean_philo(t_table *table);
-static _Bool	destroy_mutex(t_table *table);
+static _Bool	destroy_sem(t_table *table);
 
 int	main(int argc, char **argv)
 {
@@ -33,8 +33,23 @@ int	main(int argc, char **argv)
 
 static int	clean_philo(t_table *table)
 {
+	if (destroy_mutex(table))
+		write(2, "Error destroying sem recurse\n", 29);
+	if (table->forks)
+		free(table->forks);
+	if (table->time)
+		free(table->time);
+	return (1);
 }
 
-static _Bool	destroy_mutex(t_table *table)
+static _Bool	destroy_sem(t_table *table)
 {
+	size_t	count;
+
+	count = 0;
+	while (count < table->n_phi)
+		sem_close(table->forks[count++]);
+	sem_close(&table->util);
+	sem_close(&table->print);
+	return (0);
 }

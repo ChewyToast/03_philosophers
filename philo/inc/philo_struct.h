@@ -46,9 +46,9 @@ typedef struct s_table
 	pthread_mutex_t	*forks;
 }	t_table;
 
-# define TAF "has taken a fork"
-# define IEA "is eating"
-# define ISS "is sleeping"
-# define IST "is thinking"
+# define TAF " |  has taken a fork\t🍴"
+# define IEA " |  is eating\t\t🍝"
+# define ISS " |  is sleeping\t\t💤"
+# define IST " |  is thinking\t\t🧠"
 
 #endif
