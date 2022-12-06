@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 23:08:24 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/06 04:01:55 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/06 04:49:00 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static int	clean_philo(t_table *table, int8_t mode)
 
 void	kill_all(t_table *table)
 {
-	// (void)table;
 	while (*(table->pid))
 		kill(*(table->pid++), SIGTERM);
 }

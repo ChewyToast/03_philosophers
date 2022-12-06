@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 09:48:52 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/06 04:16:04 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/06 04:48:25 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	philo_start(t_table *table)
 			return (write(2, "philo: Error creating thread\n", 29));
 	while (table->end < table->n_phi)
 		(void)tmp;
+	sem_post(table->dead);
 	my_sleep(510);
 	return (0);
 }
@@ -68,7 +69,10 @@ static void	philo_routine(t_table *table, size_t count)
 		pick_fork(table, &this_philo);
 		eating(table, &this_philo);
 		if (eat_enough(this_philo.eat_count, table->time->eat_times))
+		{
+			printer("eat enought ++++++++", table, &this_philo, get_time() - table->this_philo->tstart);
 			break ;
+		}
 		sleeping(table, &this_philo);
 		printer(IST, table, &this_philo, get_time() - table->this_philo->tstart);
 	}
