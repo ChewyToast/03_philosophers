@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 23:08:24 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/03 20:29:02 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/06 20:17:50 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv)
 	if (philo_start(&table))
 		return (clean_philo(&table));
 	clean_philo(&table);
-	return (0);
+	exit (0);
 }
 
 static int	clean_philo(t_table *table)

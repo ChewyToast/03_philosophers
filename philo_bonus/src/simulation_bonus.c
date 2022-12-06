@@ -6,16 +6,16 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 09:48:52 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/06 04:48:25 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/06 18:29:03 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo_bonus.h"
 
-static void	philo_routine(t_table *table, size_t count);
-static void	thread_of_fork(t_table *table);
-static void	thread_iter(t_table *table);
 static _Bool	eat_enough(size_t eat_count, ssize_t eat_times);
+static void		philo_routine(t_table *table, size_t count);
+static void		thread_of_fork(t_table *table);
+static void		father_wait(t_table *table);
 
 int	philo_start(t_table *table)
 {
@@ -30,19 +30,11 @@ int	philo_start(t_table *table)
 			return (write(2, "philo: error creating fork\n", 27));
 		if (!table->pid[table->phi_counter])
 			philo_routine(table, table->phi_counter);
-		if (pthread_create(&tmp, NULL, (void *)&thread_iter, (void *)table))
-			return (write(2, "philo: Error creating thread\n", 29));
-		my_sleep(64);
 		table->phi_counter++;
 	}
 	my_sleep(128);
 	sem_post(table->util);
-	sem_wait(table->dead);
-	if (pthread_create(&tmp, NULL, (void *)&killer_thread, (void *)table))
-			return (write(2, "philo: Error creating thread\n", 29));
-	while (table->end < table->n_phi)
-		(void)tmp;
-	sem_post(table->dead);
+	father_wait(table);
 	my_sleep(510);
 	return (0);
 }
@@ -69,20 +61,18 @@ static void	philo_routine(t_table *table, size_t count)
 		pick_fork(table, &this_philo);
 		eating(table, &this_philo);
 		if (eat_enough(this_philo.eat_count, table->time->eat_times))
-		{
-			printer("eat enought ++++++++", table, &this_philo, get_time() - table->this_philo->tstart);
 			break ;
-		}
 		sleeping(table, &this_philo);
-		printer(IST, table, &this_philo, get_time() - table->this_philo->tstart);
+		printer(IST, table, &this_philo, get_time() - this_philo.tstart);
 	}
-	exit (1);
+	exit (0);
 }
 
 static void	thread_of_fork(t_table *table)
 {
 	long long	time;
-	while(1)
+
+	while (1)
 	{
 		if (table->this_philo->eat_count == 0)
 		{
@@ -91,7 +81,7 @@ static void	thread_of_fork(t_table *table)
 				time = get_time() - table->this_philo->tstart;
 				sem_wait(table->print);
 				printf("%lld %zu died\n", time, table->this_philo->num);
-				sem_post(table->dead);
+				exit (1);
 			}
 		}
 		else
@@ -101,25 +91,28 @@ static void	thread_of_fork(t_table *table)
 				time = table->this_philo->last_eat - get_time();
 				sem_wait(table->print);
 				printf("%lld %zu died\n", time, table->this_philo->num);
-				sem_post(table->dead);
+				exit (1);
 			}
 		}
 	}
 }
 
-static void	thread_iter(t_table *table)
+static	void	father_wait(t_table *table)
 {
-	size_t	count;
-	pid_t	pid;
-	int		status;
+	int	status;
 
-	count = 0;
-	while (table->pid[count])
-		count++;
-	pid = table->pid[count - 1];
 	status = 0;
-	waitpid(pid, &status, 0);
-	table->end += 1;
+	while (table->end < table->n_phi)
+	{
+		waitpid(-1, &status, WUNTRACED);
+		if (WEXITSTATUS(status) == 1)
+			break ;
+		if (WEXITSTATUS(status) == 0)
+		{
+			table->end++;
+		}
+	}
+	kill_all(table);
 }
 
 static _Bool	eat_enough(size_t eat_count, ssize_t eat_times)

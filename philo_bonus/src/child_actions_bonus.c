@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 01:45:49 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/12/06 04:02:44 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/06 17:18:40 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	pick_fork(t_table *table, t_philo *this_philo)
 void	eating(t_table *table, t_philo *this_philo)
 {
 	printer(IEA, table, this_philo,
-			this_philo->last_eat - this_philo->tstart);
+		this_philo->last_eat - this_philo->tstart);
 	this_philo->eat_count += 1;
 	my_sleep(table->time->teat);
 	sem_post(table->forks);

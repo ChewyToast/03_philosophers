@@ -6,12 +6,12 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 23:08:59 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/06 04:00:52 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/06 17:18:24 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <stddef.h>
 
@@ -33,10 +33,10 @@ int			philo_init(int argc, char **argv, t_table *table);
 int			philo_start(t_table *table);
 
 //	----- utils_bonus.c
-void		printer(char *to_print, t_table *table, t_philo *phi, long long time);
+void		printer(char *to_print, t_table *table,
+				t_philo *phi, long long time);
 long long	get_time(void);
 void		my_sleep(long long sleep_time);
-void		killer_thread(t_table *table);
 
 //	----- child_actions_bonus.c
 void		pick_fork(t_table *table, t_philo *this_philo);

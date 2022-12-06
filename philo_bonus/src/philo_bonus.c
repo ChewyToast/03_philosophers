@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 23:08:24 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/06 04:49:00 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/06 20:18:48 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,19 @@ static int	clean_philo(t_table *table, int8_t mode)
 		write(2, "Error destroying sem recurse\n", 29);
 	if (table->time)
 		free(table->time);
-	// if (table->pid)
-		// free(table->pid);
+	if (table->pid)
+		free(table->pid);
 	return (1);
 }
+/* FALTAN FREES*/
 
 void	kill_all(t_table *table)
 {
-	while (*(table->pid))
-		kill(*(table->pid++), SIGTERM);
+	size_t	count;
+
+	count = 0;
+	while (table->pid[count])
+		kill(table->pid[count++], SIGTERM);
 }
 
 static _Bool	destroy_sem(t_table *table)

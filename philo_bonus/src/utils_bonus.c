@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 20:29:23 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/12/06 04:15:37 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/06 17:10:53 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,4 @@ void	my_sleep(long long sleep_time)
 	sleep_time += get_time();
 	while (get_time() < sleep_time)
 		usleep(64);
-}
-
-void	killer_thread(t_table *table)
-{
-	sem_wait(table->dead);
-	kill_all(table);
-	sem_post(table->dead);
 }

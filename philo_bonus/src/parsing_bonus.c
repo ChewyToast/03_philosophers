@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 09:47:42 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/06 03:57:36 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/06 19:11:33 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ static _Bool	time_startup(t_table *table, char **argv, int argc)
 }
 
 static _Bool	sem_initer(t_table *table)
-// table->forks = sem_open("forks", O_CREAT | O_EXCL, 0644, table->n_phi);
-//										quizas se debe hacer      + 1 ^ v
 {
 	sem_unlink("sem_forks");
 	sem_unlink("sem_util");
@@ -59,7 +57,7 @@ static _Bool	sem_initer(t_table *table)
 	sem_unlink("sem_dead");
 	table->forks = sem_open("sem_forks", O_CREAT | O_EXCL, 0644, table->n_phi);
 	table->util = sem_open("sem_util", O_CREAT | O_EXCL, 0644, 1);
-	table->print = sem_open("sem_print", O_CREAT| O_EXCL, 0644, 1);
+	table->print = sem_open("sem_print", O_CREAT | O_EXCL, 0644, 1);
 	table->dead = sem_open("sem_dead", O_CREAT | O_EXCL, 0644, 1);
 	if (table->forks == SEM_FAILED
 		|| table->util == SEM_FAILED
