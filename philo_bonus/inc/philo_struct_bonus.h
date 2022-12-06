@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_struct.h                                     :+:      :+:    :+:   */
+/*   philo_struct_bonus.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 23:18:15 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/03 22:05:17 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/06 04:15:27 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,20 @@
 # define PHILO_STRUCT_H
 
 # include <pthread.h>
+
+# include <semaphore.h>
+
+# include <signal.h>
+
+typedef struct s_philo
+{
+	size_t		num;
+	long long	tstart;
+	long long	last_eat;
+	long long	eat_count;
+	sem_t		*right;
+	sem_t		*left;
+}	t_philo;
 
 typedef struct s_time
 {
@@ -27,13 +41,16 @@ typedef struct s_time
 typedef struct s_table
 {
 	size_t	n_phi;
+	size_t	end;
+	pid_t	*pid;
 	size_t	phi_counter;
+	t_philo	*this_philo;
 	char	**argv;
-	_Bool	dead;
 	t_time	*time;
 	sem_t	*util;
+	sem_t	*dead;
 	sem_t	*print;
-	sem_t	**forks;
+	sem_t	*forks;
 }	t_table;
 
 # define TAF "has taken a fork"

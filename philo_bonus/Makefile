@@ -6,7 +6,7 @@
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/03 11:48:41 by bruno             #+#    #+#              #
-#    Updated: 2022/12/05 21:59:43 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/12/06 02:49:48 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ FILES	=	philo_bonus.c\
 			utils_bonus.c\
 			libft_bonus.c\
 			parsing_bonus.c\
+			child_actions_bonus.c\
 			simulation_bonus.c
 
 SRC		=	$(addprefix $(SRC_DIR)/, $(FILES))

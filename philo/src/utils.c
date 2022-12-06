@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 20:29:23 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/12/03 22:07:39 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/06 04:14:45 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	printer(char *to_print, t_table *table, t_philo *phi, long long time)
 	pthread_mutex_lock(&table->print);
 	if (!table->dead)
 	{
-		if (printf("| %.6lld |  %zu %s\n", time, phi->num, to_print) < 0)
+		if (printf("%lld %zu %s\n", time, phi->num, to_print) < 0)
 		{
 			write(2, "printf: Bad file descriptor\n", 28);
 			table->dead = 1;
@@ -47,7 +47,7 @@ void	my_sleep(long long sleep_time)
 void	set_dead(t_table *table, ssize_t count)
 {
 	pthread_mutex_lock(&table->print);
-	if (printf("| %.6lld |  %zu  |  %s\t\t\t💀\n", get_time() - table->time->tstart, count + 1, "died") < 0)
+	if (printf("%lld %zu %s\n", get_time() - table->time->tstart, count + 1, "died") < 0)
 		write(2, "printf: Bad file descriptor\n", 28);
 	table->dead = 1;
 	pthread_mutex_unlock(&table->print);

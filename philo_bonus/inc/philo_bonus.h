@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 23:08:59 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/03 22:08:08 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/06 04:00:52 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,31 @@
 
 # include <stdio.h>
 
-# include <pthread.h>
-
 # include <unistd.h>
 
-# include "philo_struct.h"
+# include "philo_struct_bonus.h"
 
-//	----- parsing.c
+//	----- philo_bonus.c
+void		kill_all(t_table *table);
+
+//	----- parsing_bonus.c
 int			philo_init(int argc, char **argv, t_table *table);
 
-//	----- simulation.c
+//	----- simulation_bonus.c
 int			philo_start(t_table *table);
 
-//	----- utils.c
+//	----- utils_bonus.c
+void		printer(char *to_print, t_table *table, t_philo *phi, long long time);
 long long	get_time(void);
-void		set_dead(t_table *table, ssize_t count);
-void		my_sleep(int32_t sleep_time);
-void		printer(char *to_print, t_table *table, t_philo *phi,
-				long long time);
+void		my_sleep(long long sleep_time);
+void		killer_thread(t_table *table);
 
-//	----- libft.c
+//	----- child_actions_bonus.c
+void		pick_fork(t_table *table, t_philo *this_philo);
+void		eating(t_table *table, t_philo *this_philo);
+void		sleeping(t_table *table, t_philo *this_philo);
+
+//	----- libft_bonus.c
 int			ft_strlen(const char *s);
 void		*ft_calloc(size_t nmemb, size_t size);
 
