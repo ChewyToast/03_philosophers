@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 23:08:59 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/06 21:20:13 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/07 05:28:40 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int			philo_init(int argc, char **argv, t_table *table);
 int			philo_start(t_table *table);
 
 //	----- utils_bonus.c
-void		printer(char *to_print, t_table *table, t_philo *phi);
+void		printer(char *to_print, t_table *table, t_philo *phi, int mode);
+// void		printer(char *to_print, t_table *table, t_philo *phi);
 long long	get_time(void);
 void		my_sleep(long long sleep_time);
 
