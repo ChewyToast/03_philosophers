@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 23:08:24 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/06 20:18:48 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/07 21:12:59 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static int	clean_philo(t_table *table, int8_t mode)
 		free(table->pid);
 	return (1);
 }
-/* FALTAN FREES*/
 
 void	kill_all(t_table *table)
 {

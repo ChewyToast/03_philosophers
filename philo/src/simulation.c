@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 09:48:52 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/07 02:38:34 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/07 21:46:20 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	philo_start(t_table *table)
 			return (write(2, "philo: Error creating thread\n", 29));
 		count++;
 	}
-	my_sleep(8 * table->n_phi);
+	my_sleep(2 * table->n_phi);
 	pthread_mutex_unlock(&table->util);
 	table->time->tstart = get_time();
 	philo_start_iter(table);

@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 09:48:52 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/07 05:53:30 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/07 21:44:39 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	philo_start(t_table *table)
 	if (!table->time->eat_times)
 		return (0);
 	sem_wait(table->util);
-	table->time->tstart = get_time();
 	while (table->phi_counter < table->n_phi)
 	{
 		table->pid[table->phi_counter] = fork();
@@ -33,6 +32,7 @@ int	philo_start(t_table *table)
 			return (write(2, "philo: error creating fork\n", 27));
 		if (!table->pid[table->phi_counter])
 			philo_routine(table, table->phi_counter);
+		my_sleep(5);
 		table->phi_counter++;
 	}
 	sem_post(table->util);
@@ -49,12 +49,14 @@ static void	philo_routine(t_table *table, size_t count)
 	this_philo.num = count + 1;
 	this_philo.eat_count = 0;
 	this_philo.last_eat = 0;
-	// printf("START TIME: |%lld|\n", get_time());
+	table->this_philo = &this_philo;
+	my_sleep(5 * (table->n_phi - count));
 	table->time->tstart = get_time();
+	// sem_wait(table->util);
+	// sem_post(table->util);
 	if (table->n_phi > 1 && this_philo.num % 2)
 		my_sleep(table->time->teat);
 	this_philo.last_eat = table->time->tstart;
-	table->this_philo = &this_philo;
 	if (pthread_create(&tmp, NULL, (void *)&thread_of_fork, (void *)table))
 		exit (write(2, "philo: Error creating thread\n", 29));
 	while (1)

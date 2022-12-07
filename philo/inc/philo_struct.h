@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 23:18:15 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/06 22:22:22 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/07 21:58:20 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ typedef struct s_table
 	pthread_mutex_t	*forks;
 }	t_table;
 
-# define TAF "has taken a fork"
-# define IEA "is eating"
-# define ISS "is sleeping"
-# define IST "is thinking"
+# define TAF "| has taken a fork"
+# define IEA "| is eating"
+# define ISS "| is sleeping"
+# define IST "| is thinking"
 
 #endif
