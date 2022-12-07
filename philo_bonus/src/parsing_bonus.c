@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 09:47:42 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/06 19:11:33 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/06 22:26:44 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	philo_init(int argc, char **argv, t_table *table)
 {
 	if (argc < 5 || argc > 6)
 		return (write(2, "Invalid arguments\n", 18));
-	if (parse_init(argv))
+	if (parse_init(argv) || atoi(argv[1]) == 0)
 		return (write(2, "Invalid Arguments\n", 18));
 	table->n_phi = atoi(argv[1]);
 	table->pid = ft_calloc(sizeof(pid_t), table->n_phi);

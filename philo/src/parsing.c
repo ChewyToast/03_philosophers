@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 09:47:42 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/03 22:06:38 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/07 01:58:38 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 static _Bool	parse_init(char **argv);
 static _Bool	mutex_init(t_table *table);
 static _Bool	time_startup(t_table *table, char **argv, int argc);
+static int		max_int(char *input, char *max_value);
 
 int	philo_init(int argc, char **argv, t_table *table)
 {
 	if (argc < 5 || argc > 6)
 		return (write(2, "Invalid arguments\n", 18));
-	if (parse_init(argv))
+	if (parse_init(argv) || atoi(argv[1]) == 0)
 		return (write(2, "Invalid Arguments\n", 18));
 	table->n_phi = atoi(argv[1]);
 	table->philo = ft_calloc(sizeof(t_philo), table->n_phi);
@@ -77,13 +78,31 @@ static _Bool	parse_init(char **argv)
 	tmp = 0;
 	while (argv[count])
 	{
+		if (max_int(argv[count], "2147483647"))
+			return (1);
 		tmp = 0;
 		while (argv[count][tmp] && (argv[count][tmp] >= '0'
 			&& argv[count][tmp] <= '9'))
 			tmp++;
-		if (argv[count][tmp] || tmp > 5)
+		if (argv[count][tmp])
 			return (1);
 		count++;
+	}
+	return (0);
+}
+
+static int	max_int(char *input, char *max_value)
+{
+	if (!ft_strlen(input))
+		return (1);
+	if (ft_strlen(input) < 10)
+		return (0);
+	while (*input && *max_value)
+	{
+		if (*input > *max_value)
+			return (1);
+		max_value++;
+		input++;
 	}
 	return (0);
 }

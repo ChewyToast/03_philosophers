@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 09:48:52 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/06 04:05:23 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/07 02:38:34 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	philo_start(t_table *table)
 
 	count = 0;
 	tmp = 0;
+	if (!table->time->eat_times)
+		return (0);
 	pthread_mutex_lock(&table->util);
 	while (count < table->n_phi)
 	{
@@ -31,6 +33,7 @@ int	philo_start(t_table *table)
 			return (write(2, "philo: Error creating thread\n", 29));
 		count++;
 	}
+	my_sleep(8 * table->n_phi);
 	pthread_mutex_unlock(&table->util);
 	table->time->tstart = get_time();
 	philo_start_iter(table);
@@ -41,22 +44,25 @@ int	philo_start(t_table *table)
 static void	philo_start_iter(t_table *table)
 {
 	size_t	count;
+	size_t	check_eat;
 
 	count = 0;
+	check_eat = 0;
+	while (count < table->n_phi)
+		table->philo[count++].last_eat = table->time->tstart;
 	while (!table->dead)
 	{
 		if (count == table->n_phi)
+		{
+			check_eat = 0;
 			count = 0;
-		if (table->philo[count].eat_count == 0)
-		{
-			if (table->time->tdie <= get_time() - table->time->tstart)
-				set_dead(table, count);
 		}
-		else
-		{
-			if (table->time->tdie <= get_time() - table->philo[count].last_eat)
-				set_dead(table, count);
-		}
+		if (eat_enough(table->philo[count].eat_count, table->time->eat_times))
+			check_eat++;
+		if (check_eat == table->n_phi)
+			break ;
+		if (table->time->tdie <= get_time() - table->philo[count].last_eat)
+			set_dead(table, count);
 		count++;
 	}
 }
@@ -71,21 +77,20 @@ static void	philo_routine(t_table *table)
 	while (!table->dead)
 	{
 		pthread_mutex_lock(this_philo->left);
-		printer(TAF, table, this_philo, get_time() - table->time->tstart);
+		printer(TAF, table, this_philo);
 		pthread_mutex_lock(this_philo->right);
-		printer(TAF, table, this_philo, get_time() - table->time->tstart);
-		this_philo->last_eat = get_time();
+		printer(TAF, table, this_philo);
+		printer(IEA, table, this_philo);
 		this_philo->eat_count += 1;
-		printer(IEA, table, this_philo,
-			this_philo->last_eat - table->time->tstart);
+		this_philo->last_eat = get_time();
 		my_sleep(table->time->teat);
 		pthread_mutex_unlock(this_philo->left);
 		pthread_mutex_unlock(this_philo->right);
 		if (eat_enough(this_philo->eat_count, table->time->eat_times))
 			break ;
-		printer(ISS, table, this_philo, get_time() - table->time->tstart);
+		printer(ISS, table, this_philo);
 		my_sleep(table->time->tsleep);
-		printer(IST, table, this_philo, get_time() - table->time->tstart);
+		printer(IST, table, this_philo);
 	}
 }
 
@@ -102,8 +107,10 @@ static _Bool	routine_init(t_table *table, t_philo *this_philo)
 	pthread_mutex_unlock(&table->print);
 	pthread_mutex_lock(&table->util);
 	pthread_mutex_unlock(&table->util);
+	if (table->n_phi <= 1)
+		return (0);
 	if (this_philo->num % 2)
-		my_sleep(8);
+		my_sleep(table->time->teat);
 	return (0);
 }
 

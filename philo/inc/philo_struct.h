@@ -6,12 +6,14 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 23:18:15 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/06 04:15:11 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/06 22:22:22 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_STRUCT_H
 # define PHILO_STRUCT_H
+
+# include <sys/time.h>
 
 # include <pthread.h>
 

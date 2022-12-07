@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 09:48:52 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/06 18:29:03 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/06 22:13:10 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ int	philo_start(t_table *table)
 			return (write(2, "philo: error creating fork\n", 27));
 		if (!table->pid[table->phi_counter])
 			philo_routine(table, table->phi_counter);
+		my_sleep(32);
 		table->phi_counter++;
 	}
-	my_sleep(128);
 	sem_post(table->util);
 	father_wait(table);
-	my_sleep(510);
+	my_sleep(128);
 	return (0);
 }
 
@@ -63,7 +63,7 @@ static void	philo_routine(t_table *table, size_t count)
 		if (eat_enough(this_philo.eat_count, table->time->eat_times))
 			break ;
 		sleeping(table, &this_philo);
-		printer(IST, table, &this_philo, get_time() - this_philo.tstart);
+		printer(IST, table, &this_philo);
 	}
 	exit (0);
 }
