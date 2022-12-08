@@ -6,16 +6,16 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 09:47:42 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/07 03:21:40 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/08 01:22:48 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo_bonus.h"
 
 static _Bool	time_startup(t_table *table, char **argv, int argc);
+static int		max_int(char *input, char *max_value);
 static _Bool	sem_initer(t_table *table);
 static _Bool	parse_init(char **argv);
-static int	max_int(char *input, char *max_value);
 
 int	philo_init(int argc, char **argv, t_table *table)
 {

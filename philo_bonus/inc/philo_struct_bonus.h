@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 23:18:15 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/07 05:45:04 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/07 23:18:59 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,22 @@ typedef struct s_time
 
 typedef struct s_table
 {
-	size_t	n_phi;
-	size_t	end;
-	pid_t	*pid;
-	size_t	phi_counter;
-	t_philo	*this_philo;
-	char	**argv;
-	t_time	*time;
-	sem_t	*util;
-	sem_t	*dead;
-	sem_t	*print;
-	sem_t	*forks;
+	char		**argv;
+	pid_t		*pid;
+	size_t		end;
+	size_t		n_phi;
+	size_t		phi_counter;
+	long long	twait;
+	sem_t		*util;
+	sem_t		*dead;
+	sem_t		*print;
+	sem_t		*forks;
+	t_time		*time;
+	t_philo		*this_philo;
 }	t_table;
 
-# define TAF "has taken a fork"
-# define IEA "is eating"
-# define ISS "is sleeping"
-# define IST "is thinking"
-
+# define TAF "| has taken a fork"
+# define IEA "| is eating"
+# define ISS "| is sleeping"
+# define IST "| is thinking"
 #endif

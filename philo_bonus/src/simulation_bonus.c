@@ -6,56 +6,43 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 09:48:52 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/07 21:44:39 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/08 01:23:10 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo_bonus.h"
 
 static _Bool	eat_enough(size_t eat_count, ssize_t eat_times);
-static void		philo_routine(t_table *table, size_t count);
+static void		philo_routine(t_table *table, size_t count, pid_t pid);
 static void		thread_of_fork(t_table *table);
 static void		father_wait(t_table *table);
 
 int	philo_start(t_table *table)
 {
-	pthread_t	tmp;
-
-	tmp = 0;
-	if (!table->time->eat_times)
-		return (0);
-	sem_wait(table->util);
+	table->time->tstart = get_time();
 	while (table->phi_counter < table->n_phi)
 	{
 		table->pid[table->phi_counter] = fork();
 		if (table->pid[table->phi_counter] < 0)
 			return (write(2, "philo: error creating fork\n", 27));
 		if (!table->pid[table->phi_counter])
-			philo_routine(table, table->phi_counter);
-		my_sleep(5);
+			philo_routine(table, table->phi_counter, 0);
 		table->phi_counter++;
 	}
-	sem_post(table->util);
 	father_wait(table);
-	my_sleep(128);
 	return (0);
 }
 
-static void	philo_routine(t_table *table, size_t count)
+static void	philo_routine(t_table *table, size_t count, pid_t pid)
 {
 	pthread_t	tmp;
 	t_philo		this_philo;
 
+	(void)pid;
 	this_philo.num = count + 1;
 	this_philo.eat_count = 0;
 	this_philo.last_eat = 0;
 	table->this_philo = &this_philo;
-	my_sleep(5 * (table->n_phi - count));
-	table->time->tstart = get_time();
-	// sem_wait(table->util);
-	// sem_post(table->util);
-	if (table->n_phi > 1 && this_philo.num % 2)
-		my_sleep(table->time->teat);
 	this_philo.last_eat = table->time->tstart;
 	if (pthread_create(&tmp, NULL, (void *)&thread_of_fork, (void *)table))
 		exit (write(2, "philo: Error creating thread\n", 29));
@@ -84,6 +71,7 @@ static void	thread_of_fork(t_table *table)
 			printf("%lld %zu died\n", time, table->this_philo->num);
 			exit (1);
 		}
+		my_sleep(500);
 	}
 }
 
