@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 09:48:52 by bruno             #+#    #+#             */
-/*   Updated: 2022/12/08 01:23:10 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/08 03:01:11 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	thread_of_fork(t_table *table)
 		{
 			time = get_time() - table->time->tstart;
 			sem_wait(table->print);
-			printf("%lld %zu died\n", time, table->this_philo->num);
+			printf("| %.4lld | %.3zu | died\n", time, table->this_philo->num);
 			exit (1);
 		}
 		my_sleep(500);

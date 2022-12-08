@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 20:29:23 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/12/08 01:27:14 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/08 02:59:41 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	printer(char *to_print, t_table *table, t_philo *phi, int mode)
 	if (mode)
 		phi->last_eat = get_time();
 	(void)mode;
-	if (printf("| %lld | %zu %s\n", get_time() - table->time->tstart,
+	if (printf("| %.4lld | %.3zu %s\n", get_time() - table->time->tstart,
 			phi->num, to_print) < 0)
 	{
 		write(2, "printf: Bad file descriptor\n", 28);
